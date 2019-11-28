@@ -27,6 +27,7 @@ Y <- a + b*X + rnorm(n,0,200) # true DGP
 
 dat <- data.frame(X,Y)
 
+# The hypothesized relationship
 ggplot(data=dat,aes(x=X,y=Y)) +
     geom_smooth(method="lm", se=F,color="black",linetype="dashed") +
     expand_limits(y=0) + 
@@ -42,7 +43,7 @@ ggplot(data=dat,aes(x=X,y=Y)) +
     xlab("Education (X)") + 
     ylab("Income (Y)")
 
-
+# Our "data"
 ggplot(data=dat,aes(x=X,y=Y)) +
     geom_point(shape=3,size=3,) +
     expand_limits(y=0) + 
@@ -55,7 +56,7 @@ ggplot(data=dat,aes(x=X,y=Y)) +
     xlab("Education (years)") + 
     ylab("Income")
 
-
+# Our data, with the estimated relationship indicated by the fitted line
 ggplot(data=dat,aes(x=X,y=Y)) +
     geom_point(shape=3,size=3,) +
     geom_smooth(method="lm", se=F,color="red",linetype="dashed") +
@@ -77,6 +78,7 @@ mod <- lm(Y~X)
     beta <- format(round(beta,2), nsmall=2)
     alpha <- format(round(alpha,2), nsmall=2)
     
+# The full plot, with the data points, fitted curve and regression coefficients
 ggplot(data=dat,aes(x=X,y=Y)) +
         geom_point(shape=3,size=3,) +
         geom_smooth(method="lm", se=F,color="red",linetype="dashed") +
