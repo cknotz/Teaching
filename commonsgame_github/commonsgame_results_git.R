@@ -38,7 +38,7 @@ ui <- fluidPage(
         textOutput("textout1")
         ),
         column(4,
-        actionButton(style = "margin-top: 120px;", inputId = "fetch","Fetch results",icon("arrow-circle-down",lib="font-awesome"))
+        actionButton(style = "margin-top: 120px;", inputId = "fetch","Fetch/refresh results",icon("arrow-circle-down",lib="font-awesome"))
                )),
     hr(),
     fluidRow(
@@ -59,7 +59,7 @@ ui <- fluidPage(
             tableOutput('defe'))),
     hr(),
     mainPanel(
-        actionButton(inputId = "expunge","Start over",icon("exclamation-circle",lib="font-awesome"))
+        actionButton(inputId = "expunge","Delete data",icon("exclamation-circle",lib="font-awesome"))
         ),
 )
 

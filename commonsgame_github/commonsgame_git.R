@@ -10,6 +10,7 @@
 
 
 library(shiny)
+    library(shinyjs)
     library(rsconnect)
     library(googlesheets4)
 
@@ -22,8 +23,10 @@ sheets_auth(
 sheet <- "<insert-direct-link-to-GoogleSheet>"
     
 
+
 # Define UserInterface
 ui <- fluidPage(
+    shinyjs::useShinyjs(),
     p(strong("Instructions")),
     p("You and your classmates need to divide 100 gold coins (or, if you consider that lame, something else you care about) between yourselves."),
     p("You decide individually how many coins you want to take out."),
@@ -38,7 +41,7 @@ ui <- fluidPage(
     fluidRow(
         column(5,style = "margin-top: 20px;", textInput(inputId="name",label="How should we call you?",value="",placeholder = "Your name/pseudonym")),
         column(2, numericInput(inputId="value",label="How many coins will you take?",value = 0,min = 0,max = 100)),
-        column(2,style = "margin-top: 45px;",actionButton(inputId="submit",label="Submit & Exit"))
+        column(2,style = "margin-top: 45px;",actionButton(inputId="submit",label="Submit"))
             )
 )
 
@@ -51,10 +54,14 @@ server <- function(input, output) {
         newline <- isolate(c(input$name,input$value))
         isolate(values$df <- rbind(as.matrix(values$df),unlist(newline)))
         sheets_append(as.data.frame(values$df),sheet)
+        disable("submit")
     })
-    observe({
-        if(input$submit>0) stopApp()
-    })
+     observeEvent(input$submit, {
+       insertUI(
+           selector = "#submit",
+           where="afterEnd",
+           ui=p((strong("Thank you! Your choice has been submitted. You can now close this tab.")))) 
+     })
 }
 
 # Run the application 
